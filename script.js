@@ -1,12 +1,18 @@
-const header = document.getElementById("header")
-const paragraph = document.getElementById("paragraph")
-const input = document.getElementById("input")
+const header = document.getElementById("header");
+const paragraph = document.getElementById("paragraph");
 
-function foo(){
-    fetch(`https://jsonplaceholder.typicode.com/todos/${input.value}`)
+fetch('https://jsonplaceholder.typicode.com/todos/')
     .then(response => response.json())
     .then(data => {
-        header.textContent = data.id;
-        paragraph.textContent = data.title;
+        data.forEach(item => {
+            console.log(item);
+
+            // Create a new paragraph element for each todo item
+            const todoItem = document.createElement("p");
+            todoItem.textContent = `ID: ${item.id}, Title: ${item.title}`;
+            
+            // Append the new paragraph to the paragraph div
+            paragraph.appendChild(todoItem);
+        });
     })
-}
+    .catch(error => console.error('Error fetching data:', error));
